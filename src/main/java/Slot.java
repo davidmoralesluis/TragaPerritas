@@ -1,11 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 
 
-public class Slot extends JFrame {
+public class Slot extends JFrame implements ActionListener {
     JLabel titulo;
     JLabel firstIcon;
     JLabel secondIcon;
@@ -59,7 +60,14 @@ public class Slot extends JFrame {
         img.add(new ImageIcon(ruta+"limon.png"));//12
         img.add(new ImageIcon(ruta+"fail.png"));//13
 
+        //Timer
+        sec = new Timer(1000,this);
+        sec.start();
 
+        mili300 = new Timer(300,this);
+        mili300.start();
+
+        ganacias = new Timer(800,this);
 
 
         // con un JLabel ponemos el Titulo del Juego. Tamaño, Fuente, Coordenadas
@@ -103,7 +111,7 @@ public class Slot extends JFrame {
         startboton.setOpaque(false);
         startboton.setBorderPainted(false);
         startboton.setFocusPainted(false);
-       // startboton.addActionListener(this);
+        startboton.addActionListener(this);
         add(startboton);
         leftArrow = new JLabel();
         leftArrow.setBounds(240, 216, 32, 32);
@@ -124,7 +132,7 @@ public class Slot extends JFrame {
         insertCoin.setOpaque(false);
         insertCoin.setBorderPainted(false);
         insertCoin.setFocusPainted(false);
-       // insertCoin.addActionListener(this);
+        insertCoin.addActionListener(this);
         add(insertCoin);
         insertArrow = new JLabel();
         insertArrow.setBounds(280, 26, 32, 32);
@@ -153,5 +161,125 @@ public class Slot extends JFrame {
 
 
     }
+    @Override
+    public void actionPerformed(ActionEvent action) {
 
+        if (dinero>1) {
+            cash=true;
+        }else{
+            cash=false;
+        }
+
+        if (action.getSource()==mili300) {
+            if (mili) {
+                if (cash) {
+                    rightArrow.setBounds(128, 216, 32, 32);
+                    leftArrow.setBounds(240, 216, 32, 32);
+                    rightArrow.setVisible(true);
+                    leftArrow.setVisible(true);
+                } else {
+                    insertArrow.setBounds(280, 26, 32, 32);
+                    rightArrow.setVisible(false);
+                    leftArrow.setVisible(false);
+                }
+                mili=false;
+            } else {
+                if (cash) {
+                    insertArrow.setVisible(false);
+                    rightArrow.setBounds(128, 216, 32, 32);
+                    leftArrow.setBounds(250, 216, 32, 32);
+                } else {
+                    insertArrow.setVisible(true);
+                    insertArrow.setBounds(270, 26, 32, 32);
+                }
+                mili=true;
+            }
+        }
+
+        if (action.getSource()==sec) {
+            if (segundo) {
+                titulo.setForeground(Color.RED);
+                info.setBackground(Color.MAGENTA);
+                info.setForeground(Color.CYAN);
+                segundo=false;
+            } else {
+                titulo.setForeground(Color.ORANGE);
+                info.setBackground(Color.CYAN);
+                info.setForeground(Color.MAGENTA);
+                segundo=true;
+            }
+        }
+
+        if (action.getSource()==ganacias) {
+            ganacias.stop();;
+            winLose.setVisible(false);
+        }
+
+        if (action.getSource()==insertCoin) {
+            dinero+=10.0;
+            saldo.setText(String.format("%02.2f", dinero));
+            winLose.setText("+10$");
+            winLose.setForeground(Color.GREEN);
+            ganacias.start();
+            winLose.setVisible(true);
+            titulo.setText("PLAY 'N' WIN");
+            firstIcon.setIcon(img.get(0));
+            secondIcon.setIcon(img.get(0));
+            thirdIcon.setIcon(img.get(0));
+        }
+
+        if (action.getSource()==startboton) {
+            if (dinero<1) {
+                firstIcon.setIcon(img.get(13));
+                secondIcon.setIcon(img.get(13));
+                thirdIcon.setIcon(img.get(13));
+                titulo.setText("INSERTA >>>");
+            } else {
+                titulo.setText("PLAY 'N' WIN");
+                dinero--;
+
+                Icon [] slot=new Icon [3];
+                int pix=0;
+
+                for (int i = 0; i < slot.length; i++) {
+                    pix=(int)(Math.random()*6+1);
+                    slot[i]=img.get(pix+6);
+                }
+
+                firstIcon.setIcon(slot[0]);
+                secondIcon.setIcon(slot[1]);
+                thirdIcon.setIcon(slot[2]);
+
+                if (slot[0].equals(slot[1])&&slot[0].equals(slot[2])) {
+                    info.setText("!! JACKPOT !!");
+                    info.setVisible(true);
+                    dinero+=5;
+                    saldo.setText(dinero+"$");
+                    winLose.setText("+5.00$");
+                    winLose.setForeground(Color.GREEN);
+                    ganacias.start();
+                    winLose.setVisible(true);
+                }else{
+                    if (slot[0].equals(slot[2])||slot[0].equals(slot[1])||slot[1].equals(slot[2])) {
+                        info.setText("!! Has Ganado !!");
+                        info.setVisible(true);
+                        dinero+=1.5;
+                        saldo.setText(dinero+"$");
+                        winLose.setText("+1.50$");
+                        winLose.setForeground(Color.GREEN);
+                        ganacias.start();
+                        winLose.setVisible(true);
+                    }else{
+                        info.setText("Mala Suerte :(");
+                        info.setVisible(true);
+                        saldo.setText(dinero+"$");
+                        winLose.setText("-1$");
+                        winLose.setForeground(Color.RED);
+                        ganacias.start();
+                        winLose.setVisible(true);
+                    }
+                }
+            }
+        }
+    }
 }
