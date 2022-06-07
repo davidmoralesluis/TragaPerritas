@@ -31,10 +31,26 @@ public class Slot extends JFrame implements ActionListener {
     //Imagenes
     ArrayList<Icon> img = new ArrayList <Icon>();
 
+    private static Slot instance = null;
+    public static Slot getInstance(){
+
+        if (instance == null) {
+            // como no está creada, la creo
+            // desde aqui si que puedo acceder al constructor
+            // porque estoy en la misma clase
+            instance = new Slot();
+        }
+        // devuelvo la instancia
+        return instance;
+    }
+
+
     /**
      * Constructor 'Slot'
      */
-    public Slot() {
+    private Slot()  {
+
+
 
         super("Supertragaperras");
 
@@ -42,6 +58,9 @@ public class Slot extends JFrame implements ActionListener {
         this.setBounds(950, 300, 400, 480);
         this.setLayout(null);
         this.getContentPane().setBackground(Color.BLACK);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);
+        this.setResizable(true);
 
         final String ruta="src"+File.separator+"main"+File.separator+"java"+File.separator+"imagenes"+File.separator;
         // Añadimos Imagenes al ArrayList
