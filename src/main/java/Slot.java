@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.util.ArrayList;
 
 
@@ -41,21 +42,22 @@ public class Slot extends JFrame {
         this.setLayout(null);
         this.getContentPane().setBackground(Color.BLACK);
 
+        final String ruta="src"+File.separator+"main"+File.separator+"java"+File.separator+"imagenes"+File.separator;
         // Añadimos Imagenes al ArrayList
-        img.add(new ImageIcon("good-luck.png"));//0
-        img.add(new ImageIcon("button.png"));//1
-        img.add(new ImageIcon("insert-coin.png"));//2
-        img.add(new ImageIcon("dollar.png"));//3
-        img.add(new ImageIcon("insert-arrow.png"));//4
-        img.add(new ImageIcon("right-arrow.png"));//5
-        img.add(new ImageIcon("left-arrow.png"));//6
-        img.add(new ImageIcon("7.png"));//7
-        img.add(new ImageIcon("herz.png"));//8
-        img.add(new ImageIcon("diamond.png"));//9
-        img.add(new ImageIcon("clover.png"));//10
-        img.add(new ImageIcon("cherry.png"));//11
-        img.add(new ImageIcon("limon.png"));//12
-        img.add(new ImageIcon("fail.png"));//13
+        img.add(new ImageIcon(ruta+"good-luck.png"));//0
+        img.add(new ImageIcon(ruta+"button.png"));//1
+        img.add(new ImageIcon(ruta+"insert-coin.png"));//2
+        img.add(new ImageIcon(ruta+"dollar.png"));//3
+        img.add(new ImageIcon(ruta+"insert-arrow.png"));//4
+        img.add(new ImageIcon(ruta+"right-arrow.png"));//5
+        img.add(new ImageIcon(ruta+"left-arrow.png"));//6
+        img.add(new ImageIcon(ruta+"7.png"));//7
+        img.add(new ImageIcon(ruta+"herz.png"));//8
+        img.add(new ImageIcon(ruta+"diamond.png"));//9
+        img.add(new ImageIcon(ruta+"clover.png"));//10
+        img.add(new ImageIcon(ruta+"cherry.png"));//11
+        img.add(new ImageIcon(ruta+"limon.png"));//12
+        img.add(new ImageIcon(ruta+"fail.png"));//13
 
 
 
