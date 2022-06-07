@@ -39,7 +39,7 @@ public class Slot extends JFrame implements ActionListener {
         super("Supertragaperras");
 
         // Establecemos parametros del JFrame/JPanel
-        this.setBounds(1000, 300, 400, 480);
+        this.setBounds(950, 300, 400, 480);
         this.setLayout(null);
         this.getContentPane().setBackground(Color.BLACK);
 
